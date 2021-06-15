@@ -246,73 +246,73 @@ class _HomePageState extends State<HomePage> {
 
                 ],
               ),
-              RaisedButton(
-                child:Text("print Normal"),
-                onPressed: () async {
-                  try{
-
-                    await NgPrint.showDevices();
-                    await NgPrint.printText();
-                  }catch(ex){
-                    showDialog(context: context,builder: (context)=>AlertDialog(
-                      title: Text("Print"),
-                      content: Text(ex.toString()),
-                    ));
-                  }
-
-                },
-              ),
-              RaisedButton(
-                child:Text("print Kannada"),
-                onPressed: () async {
-                  try{
-
-                    await NgPrint.showDevices();
-                    await NgPrint.printUnicode();
-                  }catch(ex){
-                    // print(ex.toString());
-                    showDialog(context: context,builder: (context)=>AlertDialog(
-                      title: Text("Print"),
-                      content: Text(ex.toString()),
-                    ));
-                  }
-
-                },
-              ),
-              RaisedButton(
-                child:Text("print Kannada1"),
-                onPressed: () async {
-                  try{
-
-                    await NgPrint.showDevices();
-                    await NgPrint.printUnicode1();
-                  }catch(ex){
-                    // print(ex.toString());
-                    showDialog(context: context,builder: (context)=>AlertDialog(
-                      title: Text("Print"),
-                      content: Text(ex.toString()),
-                    ));
-                  }
-
-                },
-              ),
-              RaisedButton(
-                child:Text("print Kannada2"),
-                onPressed: () async {
-                  try{
-
-                    await NgPrint.showDevices();
-                    await NgPrint.printUnicode2();
-                  }catch(ex){
-                    // print(ex.toString());
-                    showDialog(context: context,builder: (context)=>AlertDialog(
-                      title: Text("Print"),
-                      content: Text(ex.toString()),
-                    ));
-                  }
-
-                },
-              ),
+              // RaisedButton(
+              //   child:Text("print Normal"),
+              //   onPressed: () async {
+              //     try{
+              //
+              //       await NgPrint.showDevices();
+              //       await NgPrint.printText();
+              //     }catch(ex){
+              //       showDialog(context: context,builder: (context)=>AlertDialog(
+              //         title: Text("Print"),
+              //         content: Text(ex.toString()),
+              //       ));
+              //     }
+              //
+              //   },
+              // ),
+              // RaisedButton(
+              //   child:Text("print Kannada"),
+              //   onPressed: () async {
+              //     try{
+              //
+              //       await NgPrint.showDevices();
+              //       await NgPrint.printUnicode();
+              //     }catch(ex){
+              //       // print(ex.toString());
+              //       showDialog(context: context,builder: (context)=>AlertDialog(
+              //         title: Text("Print"),
+              //         content: Text(ex.toString()),
+              //       ));
+              //     }
+              //
+              //   },
+              // ),
+              // RaisedButton(
+              //   child:Text("print Kannada1"),
+              //   onPressed: () async {
+              //     try{
+              //
+              //       await NgPrint.showDevices();
+              //       await NgPrint.printUnicode1();
+              //     }catch(ex){
+              //       // print(ex.toString());
+              //       showDialog(context: context,builder: (context)=>AlertDialog(
+              //         title: Text("Print"),
+              //         content: Text(ex.toString()),
+              //       ));
+              //     }
+              //
+              //   },
+              // ),
+              // RaisedButton(
+              //   child:Text("print Kannada2"),
+              //   onPressed: () async {
+              //     try{
+              //
+              //       await NgPrint.showDevices();
+              //       await NgPrint.printUnicode2();
+              //     }catch(ex){
+              //       // print(ex.toString());
+              //       showDialog(context: context,builder: (context)=>AlertDialog(
+              //         title: Text("Print"),
+              //         content: Text(ex.toString()),
+              //       ));
+              //     }
+              //
+              //   },
+              // ),
               RaisedButton(
                 child:Text("print Image"),
                 onPressed: () async {
