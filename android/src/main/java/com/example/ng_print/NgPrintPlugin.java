@@ -263,7 +263,7 @@ public class NgPrintPlugin implements FlutterPlugin, MethodCallHandler, Activity
   }
 
   @Override
-  public void onAttachedToActivity(@NonNull @org.jetbrains.annotations.NotNull ActivityPluginBinding binding) {
+  public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
     binding.addOnNewIntentListener(this);
     mActivity = binding.getActivity();
 
@@ -275,7 +275,7 @@ public class NgPrintPlugin implements FlutterPlugin, MethodCallHandler, Activity
   }
 
   @Override
-  public void onReattachedToActivityForConfigChanges(@NonNull @org.jetbrains.annotations.NotNull ActivityPluginBinding binding) {
+  public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
     binding.addOnNewIntentListener(this);
     mActivity = binding.getActivity();
   }
