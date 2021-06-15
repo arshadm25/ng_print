@@ -328,6 +328,22 @@ class _HomePageState extends State<HomePage> {
 
                 },
               ),
+              RaisedButton(
+                child:Text("print Text"),
+                onPressed: () async {
+                  try{
+
+                    await NgPrint.showDevices();
+                    await NgPrint.printText();
+                  }catch(ex){
+                    showDialog(context: context,builder: (context)=>AlertDialog(
+                      title: Text("Print"),
+                      content: Text(ex.toString()),
+                    ));
+                  }
+
+                },
+              ),
             ],
           ),
         ),
@@ -336,7 +352,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> printTicket() async {
-
+      await NgPrint.showDevices();
       RenderRepaintBoundary boundary = previewContainer.currentContext.findRenderObject();
       ui.Image image = await boundary.toImage();
       final directory = (await getApplicationDocumentsDirectory()).path;

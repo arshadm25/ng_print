@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Layout;
@@ -25,6 +26,11 @@ import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 import com.ngx.BluetoothPrinter;
 import com.ngx.PrinterWidth;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 /** NgPrintPlugin */
 public class NgPrintPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.NewIntentListener  {
@@ -50,13 +56,16 @@ public class NgPrintPlugin implements FlutterPlugin, MethodCallHandler, Activity
         case BluetoothPrinter.MESSAGE_STATE_CHANGE:
           switch (msg.arg1) {
             case BluetoothPrinter.STATE_CONNECTED:
+              writeToFile("Connected to " +mConnectedDeviceName);
               System.out.println(mConnectedDeviceName);
               break;
             case BluetoothPrinter.STATE_CONNECTING:
+              writeToFile("Connecting ");
               System.out.println("Connecting");
               break;
             case BluetoothPrinter.STATE_LISTEN:
             case BluetoothPrinter.STATE_NONE:
+              writeToFile("No Connection");
               System.out.println("No Connection");
               break;
           }
@@ -65,8 +74,10 @@ public class NgPrintPlugin implements FlutterPlugin, MethodCallHandler, Activity
           // save the connected device's name
           mConnectedDeviceName = msg.getData().getString(
                   BluetoothPrinter.DEVICE_NAME);
+          writeToFile("MESSAGE DEVICE NAME  "+ mConnectedDeviceName);
           break;
         case BluetoothPrinter.MESSAGE_STATUS:
+          writeToFile("MESSAGE DEVICE STATUS  " + BluetoothPrinter.STATUS_TEXT);
           System.out.println(BluetoothPrinter.STATUS_TEXT);
           break;
         default:
@@ -80,29 +91,58 @@ public class NgPrintPlugin implements FlutterPlugin, MethodCallHandler, Activity
     if (call.method.equals("initialize")) {
       try{
           mBtp.initService(this.mContext,mHandler);
+        writeToFile("INITIALIZING CONNECTION");
           result.success("Android " + android.os.Build.VERSION.RELEASE);
       }catch(Exception ex){
-        result.error("COULDNT_INITATE",ex.getMessage(),null);
+        writeToFile("COULDNT_INITATE :" + ex.getMessage());
       }
     }else if (call.method.equals("showDevices")) {
      try{
          mBtp.showDeviceList(this.mActivity);
-         result.success("Android " + android.os.Build.VERSION.RELEASE);
+       writeToFile("SHOW DEVICES");
+       result.success("Android " + android.os.Build.VERSION.RELEASE);
      }catch(Exception ex){
-         result.error("COULDNT_LIST",ex.getMessage(),null);
+       writeToFile("COULDNT_LIST :" + ex.getMessage());
      }
+    }else if (call.method.equals("printText")) {
+      try{
+        mBtp.printUnicodeText("ಒಟ್ಟು ಐಟಂಗಳು: 2 ಮೊತ್ತ");
+        writeToFile("Print Kannada");
+        mBtp.printUnicodeText("Test Subject");
+        writeToFile("Print English");
+
+        result.success("Android " + android.os.Build.VERSION.RELEASE);
+      }catch(Exception ex){
+        writeToFile("COULDNT_LIST :" + ex.getMessage());
+      }
     }else if (call.method.equals("printImage")) {
         try{
             boolean r = mBtp.setPrinterWidth(PrinterWidth.PRINT_WIDTH_48MM);
             mBtp.printImage(call.argument("path").toString());
+            writeToFile("PRINT IMAGE");
             result.success("Android " + android.os.Build.VERSION.RELEASE);
         }catch(Exception ex){
+            writeToFile("COULDNT_PRINT :" + ex.getMessage());
             result.error("COULDNT_PRINT",ex.getMessage(),null);
         }
     } else {
       result.notImplemented();
     }
   }
+
+  private void writeToFile(String data) {
+//    try {
+//      File sdCard = Environment.getExternalStorageDirectory();
+//      File dir = new File (sdCard.getAbsolutePath() + "/fish");
+//      dir.mkdirs();
+//      File file = new File(dir, "filename.txt");
+//      FileOutputStream f = new FileOutputStream(file);
+//    }
+//    catch (IOException e) {
+//      System.out.println(e.getMessage());
+//    }
+  }
+
 
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
