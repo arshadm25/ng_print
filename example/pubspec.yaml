@@ -26,6 +26,7 @@ dependencies:
   path: ^1.7.0
   path_provider: ^1.6.2
   image: ^2.1.19
+  permission_handler: ^5.1.0+2
 
 dev_dependencies:
   flutter_test:

@@ -13,17 +13,40 @@ class NgPrint {
   }
 
   static Future showDevices() async {
-    final version = await _channel.invokeMethod('showDevices');
-    return version;
+    try{
+      final version = await _channel.invokeMethod('showDevices');
+      return version;
+    }catch(ex){
+      rethrow;
+    }
   }
-  static Future printText() async {
-    final version = await _channel.invokeMethod('printText',);
-    return version;
+  static Future printText(String message) async {
+    try{
+      final version = await _channel.invokeMethod('printText',{
+        'message':message
+      });
+      return version;
+    }catch(ex){
+      rethrow;
+    }
   }
   static Future printImage(String path) async {
-    final version = await _channel.invokeMethod('printImage',{
-      'path':path
-    });
-    return version;
+    try{
+      final version = await _channel.invokeMethod('printImage',{
+        'path':path
+      });
+      return version;
+    }catch(ex){
+      rethrow;
+    }
+  }
+
+  static Future<int> getState() async {
+    try{
+      final version = await _channel.invokeMethod('getState');
+      return version;
+    }catch(ex){
+      rethrow;
+    }
   }
 }

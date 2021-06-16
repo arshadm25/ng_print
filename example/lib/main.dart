@@ -8,6 +8,7 @@ import 'package:image/image.dart' as im;
 import 'dart:ui' as ui;
 
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,12 +33,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool initiated = false;
+  bool isConnected = false;
   @override
   void initState() {
     super.initState();
     initialize();
   }
   initialize() async {
+    if(!(await Permission.location.isGranted)){
+      await Permission.location.request();
+    }
+    if(!(await Permission.storage.isGranted)){
+      await Permission.storage.request();
+    }
     await NgPrint.initialize();
     setState(() {
       initiated = true;
@@ -52,14 +60,17 @@ class _HomePageState extends State<HomePage> {
       ),
       body: initiated?RepaintBoundary(
          key:previewContainer,
-        child: SingleChildScrollView(
+
+        child:SingleChildScrollView(
           child: Column(
-            children: [
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("ಕರ್ನಾಟಕ ಸರ್ಕಾರ"), //Goverment of Karnataka
+                  Text("Sample Shop"), //Goverment of Karnataka
                 ],
               ),
               SizedBox(
@@ -68,34 +79,20 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("ಮೀನುಗಾರಿಕೆ ಇಲಾಖೆ"), //Department Of Fisheries
+                  Text("Shop address"), //Department Of Fisheries
                 ],
               ),
+              SizedBox(
+                height: 5,
+              ),
+
               SizedBox(
                 height: 5,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("ಮೀನುಗಾರಿಕೆ ಸಹಾಯಕ ನಿರ್ದೇಶಕರು"),
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("(ಶ್ರೇಣಿ-1),( ಬಂದ್ ಬ್ರೀಡಿಂಗ್) ಬಿ. ಆರ್"),
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("ಪ್ರಾಜೆಕ್ಟ್ -577115"),
+                  Text("PIN -679335"),
                 ],
               ),
               SizedBox(
@@ -110,8 +107,8 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("ದಿನಾಂಕ" + ":" + "13/06/2021"), //Date
-                  Text("ಕ್ರ.ಸಂ ನಂ" + ":" + "100") //BillNo
+                  Text("Date" + ":" + "13/06/2021"), //Date
+                  Text("Bill No." + ":" + "100") //BillNo
                 ],
               ),
               SizedBox(
@@ -135,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     width: 2,
                   ),
-                  Text("ಮೊಬೈಲ್ : 9012345679"), //Mobile
+                  Text("Phone : 123456789"), //Mobile
                 ],
               ),
               SizedBox(
@@ -153,13 +150,13 @@ class _HomePageState extends State<HomePage> {
                   DataColumn(
 
                     label: Text(
-                      'ನಂ',
+                      'SI',
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
                   DataColumn(
                     label: Text(
-                      'ವಿವರಗಳು',
+                      'ITEM',
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
@@ -171,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   DataColumn(
                     label: Text(
-                      'ಮೊಬಲಗು  (ರೂ.)',
+                      'AMOUNT',
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),
 
@@ -183,56 +180,38 @@ class _HomePageState extends State<HomePage> {
 
                     cells: <DataCell>[
                       DataCell(Text('1')),
-                      DataCell(Text('Kattla')),
+                      DataCell(Text('Item 1')),
                       DataCell(Text('10')),
                       DataCell(Text('100')),
                     ],
                   ),
                   DataRow(
                     cells: <DataCell>[
-                      DataCell(Text('1')),
-                      DataCell(Text('Kattla')),
+                      DataCell(Text('2')),
+                      DataCell(Text('Item 2')),
                       DataCell(Text('5')),
                       DataCell(Text('50')),
                     ],
                   ),
                   DataRow(
                     cells: <DataCell>[
-                      DataCell(Text('1')),
-                      DataCell(Text('Kattla')),
+                      DataCell(Text('3')),
+                      DataCell(Text('Item 3')),
                       DataCell(Text('12')),
                       DataCell(Text('120')),
                     ],
                   ),
                   DataRow(
                     cells: <DataCell>[
-                      DataCell(Text('')),
-                      DataCell(Text('')),
-                      DataCell(Text('ಒಟ್ಟು')),
+                      DataCell(Text('4')),
+                      DataCell(Text('Item 4')),
+                      DataCell(Text('12')),
                       DataCell(Text('120')),
                     ],
                   ),
                 ],
               ),
 
-              // SizedBox(
-              //   height: 3,
-              // ),
-              // Divider(
-              //   color: Colors.black,
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     SizedBox(
-              //       width: 270,
-              //     ),
-              //     Text("ಒಟ್ಟು:120") //Total
-              //   ],
-              // ),
-              // SizedBox(
-              //   height: 3,
-              // ),
               Divider(
                 color: Colors.black,
               ),
@@ -242,83 +221,24 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     width: 5,
                   ),
-                  Text("ಒಟ್ಟು ಮೊತ್ತ Rs :"), //Amunt in words
-
+                  Text("Total Rs :"), //Amunt in words
+                  Text(120.toString()),
                 ],
               ),
-              // RaisedButton(
-              //   child:Text("print Normal"),
-              //   onPressed: () async {
-              //     try{
-              //
-              //       await NgPrint.showDevices();
-              //       await NgPrint.printText();
-              //     }catch(ex){
-              //       showDialog(context: context,builder: (context)=>AlertDialog(
-              //         title: Text("Print"),
-              //         content: Text(ex.toString()),
-              //       ));
-              //     }
-              //
-              //   },
-              // ),
-              // RaisedButton(
-              //   child:Text("print Kannada"),
-              //   onPressed: () async {
-              //     try{
-              //
-              //       await NgPrint.showDevices();
-              //       await NgPrint.printUnicode();
-              //     }catch(ex){
-              //       // print(ex.toString());
-              //       showDialog(context: context,builder: (context)=>AlertDialog(
-              //         title: Text("Print"),
-              //         content: Text(ex.toString()),
-              //       ));
-              //     }
-              //
-              //   },
-              // ),
-              // RaisedButton(
-              //   child:Text("print Kannada1"),
-              //   onPressed: () async {
-              //     try{
-              //
-              //       await NgPrint.showDevices();
-              //       await NgPrint.printUnicode1();
-              //     }catch(ex){
-              //       // print(ex.toString());
-              //       showDialog(context: context,builder: (context)=>AlertDialog(
-              //         title: Text("Print"),
-              //         content: Text(ex.toString()),
-              //       ));
-              //     }
-              //
-              //   },
-              // ),
-              // RaisedButton(
-              //   child:Text("print Kannada2"),
-              //   onPressed: () async {
-              //     try{
-              //
-              //       await NgPrint.showDevices();
-              //       await NgPrint.printUnicode2();
-              //     }catch(ex){
-              //       // print(ex.toString());
-              //       showDialog(context: context,builder: (context)=>AlertDialog(
-              //         title: Text("Print"),
-              //         content: Text(ex.toString()),
-              //       ));
-              //     }
-              //
-              //   },
-              // ),
+              SizedBox(
+                height: 3,
+              ),
+              Divider(
+                color: Colors.black,
+              ),
               RaisedButton(
-                child:Text("print Image"),
+                child:Text("Connect printer"),
                 onPressed: () async {
                   try{
-
-                    printTicket();
+                      await NgPrint.showDevices();
+                      // setState(() {
+                      //   isConnected = true;
+                      // });
                   }catch(ex){
                     showDialog(context: context,builder: (context)=>AlertDialog(
                       title: Text("Print"),
@@ -328,31 +248,137 @@ class _HomePageState extends State<HomePage> {
 
                 },
               ),
-              RaisedButton(
-                child:Text("print Text"),
-                onPressed: () async {
-                  try{
+                    RaisedButton(
+                      child:Text("print Image"),
+                      onPressed: () async {
+                        try{
+                          int state = await NgPrint.getState();
+                          switch(state){
+                            case 0:
+                              showDialog(context: context,builder: (context)=>AlertDialog(
+                                title: Text("Print"),
+                                content: Text("STATE_NONE"),
+                                actions: [
+                                  FlatButton(onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text("OK"))
+                                ],
+                              ));
+                              break;
+                            case 1:
+                              showDialog(context: context,builder: (context)=>AlertDialog(
+                                title: Text("Print"),
+                                content: Text("STATE_LISTEN"),
+                                actions: [
+                                  FlatButton(onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text("OK"))
+                                ],
+                              ));
+                              break;
+                            case 2:
+                              showDialog(context: context,builder: (context)=>AlertDialog(
+                                title: Text("Print"),
+                                content: Text("Connecting"),
+                                actions: [
+                                  FlatButton(onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text("OK"))
+                                ],
+                              ));
+                              break;
+                            case 3:
+                              printTicket();
+                              break;
+                            case 4:
+                              showDialog(context: context,builder: (context)=>AlertDialog(
+                                title: Text("Print"),
+                                content: Text("Connection Exception"),
+                                actions: [
+                                  FlatButton(onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text("OK"))
+                                ],
+                              ));
+                          }
+                        }catch(ex){
+                          showDialog(context: context,builder: (context)=>AlertDialog(
+                            title: Text("Print"),
+                            content: Text(ex.toString()),
+                          ));
+                        }
 
-                    await NgPrint.showDevices();
-                    await NgPrint.printText();
-                  }catch(ex){
-                    showDialog(context: context,builder: (context)=>AlertDialog(
-                      title: Text("Print"),
-                      content: Text(ex.toString()),
-                    ));
-                  }
+                      },
+                    ),
+                    RaisedButton(
+                      child:Text("print Text"),
+                      onPressed: () async {
+                        try{
+                          int state = await NgPrint.getState();
+                          switch(state){
+                            case 0:
+                              showDialog(context: context,builder: (context)=>AlertDialog(
+                                title: Text("Print"),
+                                content: Text("STATE_NONE"),
+                                actions: [
+                                  FlatButton(onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text("OK"))
+                                ],
+                              ));
+                              break;
+                            case 1:
+                              showDialog(context: context,builder: (context)=>AlertDialog(
+                                title: Text("Print"),
+                                content: Text("STATE_LISTEN"),
+                                actions: [
+                                  FlatButton(onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text("OK"))
+                                ],
+                              ));
+                              break;
+                            case 2:
+                              showDialog(context: context,builder: (context)=>AlertDialog(
+                                title: Text("Print"),
+                                content: Text("Connecting"),
+                                actions: [
+                                  FlatButton(onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text("OK"))
+                                ],
+                              ));
+                              break;
+                            case 3:
+                              await NgPrint.printText();
+                              break;
+                            case 4:
+                              showDialog(context: context,builder: (context)=>AlertDialog(
+                                title: Text("Print"),
+                                content: Text("Connection Exception"),
+                                actions: [
+                                  FlatButton(onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text("OK"))
+                                ],
+                              ));
+                          }
+                        }catch(ex){
+                          showDialog(context: context,builder: (context)=>AlertDialog(
+                            title: Text("Print"),
+                            content: Text(ex.toString()),
+                          ));
+                        }
 
-                },
-              ),
-            ],
-          ),
-        ),
-      ):Center(child:CircularProgressIndicator() ,),
+                      },
+                    ),
+                  ],
+                ),
+          )):Center(child:CircularProgressIndicator() ,),
     );
   }
 
   Future<void> printTicket() async {
-      await NgPrint.showDevices();
       RenderRepaintBoundary boundary = previewContainer.currentContext.findRenderObject();
       ui.Image image = await boundary.toImage();
       final directory = (await getApplicationDocumentsDirectory()).path;
