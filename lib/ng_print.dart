@@ -16,8 +16,20 @@ class NgPrint {
     final version = await _channel.invokeMethod('showDevices');
     return version;
   }
-  static Future printText() async {
-    final version = await _channel.invokeMethod('printText',);
+  static Future setPrinterWidth() async {
+    final state = await _channel.invokeMethod('setPrinterWidth');
+    return state;
+  }
+
+  static Future<int> getState() async {
+    final state = await _channel.invokeMethod('getState');
+    return state;
+  }
+
+  static Future printText(String message) async {
+    final version = await _channel.invokeMethod('printText',{
+      'message':message
+    });
     return version;
   }
   static Future printImage(String path) async {
