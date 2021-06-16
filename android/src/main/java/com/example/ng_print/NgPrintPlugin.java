@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Layout;
+import android.text.TextPaint;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -106,7 +109,21 @@ public class NgPrintPlugin implements FlutterPlugin, MethodCallHandler, Activity
       }
     }else if (call.method.equals("printText")) {
       try{
-        mBtp.printUnicodeText(call.argument("message").toString());
+        int alignment = (int)call.argument("Alignment");
+        Layout.Alignment alignment1 = Layout.Alignment.ALIGN_NORMAL;
+        switch (alignment){
+          case 1:
+            alignment1 = Layout.Alignment.ALIGN_OPPOSITE;
+            break;
+          case 2:
+            alignment1 = Layout.Alignment.ALIGN_CENTER;
+            break;
+        }
+        int fontSize = (int)call.argument("fontSize");
+        TextPaint tp = new TextPaint();
+        tp.setColor(Color.BLACK);
+        tp.setTextSize(fontSize);
+        mBtp.printUnicodeText(call.argument("message").toString(),alignment1,tp);
         result.success(true);
       }catch(Exception ex){
         result.error("PRINT_TEXT_ERROR",ex.getMessage(),"");

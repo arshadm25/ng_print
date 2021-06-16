@@ -2,7 +2,11 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-
+enum Alignment {
+  ALIGNMENT_NORMAL,
+  ALIGNMENT_OPPOSITE,
+  ALIGNMENT_CENTER,
+}
 class NgPrint {
   static const MethodChannel _channel =
       const MethodChannel('ng_print');
@@ -26,9 +30,33 @@ class NgPrint {
     return state;
   }
 
-  static Future printText(String message) async {
+  static Future printText(String message,{Alignment alignment,int fontSize:16}) async {
+    int algmnt =0;
+    switch(alignment){
+      case Alignment.ALIGNMENT_CENTER:
+        algmnt = 2;
+        break;
+      case Alignment.ALIGNMENT_NORMAL:
+        algmnt = 0;
+        break;
+      case Alignment.ALIGNMENT_OPPOSITE:
+        algmnt = 1;
+        break;
+    }
     final version = await _channel.invokeMethod('printText',{
-      'message':message
+      'message':message,
+      'Alignment':algmnt,
+      'fontSize':fontSize
+    });
+    return version;
+  }
+  static Future printSeperator() async {
+    String separator = "--------------------------------";
+    int algmnt =0;
+    final version = await _channel.invokeMethod('printText',{
+      'message':separator,
+      'Alignment':algmnt,
+      'fontSize':16
     });
     return version;
   }
