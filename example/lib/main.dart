@@ -334,7 +334,7 @@ class _HomePageState extends State<HomePage> {
                   try{
 
                     await NgPrint.showDevices();
-                    await NgPrint.printText();
+                    await NgPrint.printText("asdf");
                   }catch(ex){
                     showDialog(context: context,builder: (context)=>AlertDialog(
                       title: Text("Print"),
