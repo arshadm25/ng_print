@@ -36,7 +36,7 @@ class NgPrint {
     return state;
   }
 
-  static Future printText(String message,{PAlignment alignment:PAlignment.ALIGNMENT_NORMAL,int fontSize:16,TAlignment textAlign:TAlignment.LEFT}) async {
+  static Future printText(String message,{PAlignment alignment:PAlignment.ALIGNMENT_NORMAL,int fontSize:30,TAlignment textAlign:TAlignment.LEFT}) async {
     int algmnt =0;
     switch(alignment){
       case PAlignment.ALIGNMENT_CENTER:
@@ -70,7 +70,7 @@ class NgPrint {
     return version;
   }
   static Future printSeperator() async {
-    String separator = "--------------------------------";
+    String separator = "---------------------";
     final version = await _channel.invokeMethod('printText',{
       'message':separator,
       'Alignment':0,
