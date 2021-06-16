@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Layout;
@@ -119,9 +120,21 @@ public class NgPrintPlugin implements FlutterPlugin, MethodCallHandler, Activity
             alignment1 = Layout.Alignment.ALIGN_CENTER;
             break;
         }
+
+        int textAlignment = (int)call.argument("textAlignment");
+        Paint.Align textAlign = Paint.Align.LEFT;
+        switch (textAlignment){
+          case 1:
+            textAlign = Paint.Align.CENTER;
+            break;
+          case 2:
+            textAlign = Paint.Align.RIGHT;
+            break;
+        }
         int fontSize = (int)call.argument("fontSize");
         TextPaint tp = new TextPaint();
         tp.setColor(Color.BLACK);
+        tp.setTextAlign(textAlign);
         tp.setTextSize(fontSize);
         mBtp.printUnicodeText(call.argument("message").toString(),alignment1,tp);
         result.success(true);

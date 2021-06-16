@@ -2,10 +2,16 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-enum Alignment {
+enum PAlignment {
   ALIGNMENT_NORMAL,
   ALIGNMENT_OPPOSITE,
   ALIGNMENT_CENTER,
+}
+
+enum TAlignment {
+  LEFT,
+  CENTER,
+  RIGHT,
 }
 class NgPrint {
   static const MethodChannel _channel =
@@ -30,33 +36,57 @@ class NgPrint {
     return state;
   }
 
-  static Future printText(String message,{Alignment alignment,int fontSize:16}) async {
+  static Future printText(String message,{PAlignment alignment:PAlignment.ALIGNMENT_NORMAL,int fontSize:16,TAlignment textAlign:TAlignment.LEFT}) async {
     int algmnt =0;
     switch(alignment){
-      case Alignment.ALIGNMENT_CENTER:
+      case PAlignment.ALIGNMENT_CENTER:
         algmnt = 2;
         break;
-      case Alignment.ALIGNMENT_NORMAL:
+      case PAlignment.ALIGNMENT_NORMAL:
         algmnt = 0;
         break;
-      case Alignment.ALIGNMENT_OPPOSITE:
+      case PAlignment.ALIGNMENT_OPPOSITE:
         algmnt = 1;
+        break;
+    }
+    int textAlignment = 0;
+    switch(textAlign){
+      case TAlignment.LEFT:
+        textAlignment = 0;
+        break;
+      case TAlignment.CENTER:
+        textAlignment = 1;
+        break;
+      case TAlignment.RIGHT:
+        textAlignment = 2;
         break;
     }
     final version = await _channel.invokeMethod('printText',{
       'message':message,
       'Alignment':algmnt,
-      'fontSize':fontSize
+      'fontSize':fontSize,
+      "textAlignment":textAlignment
     });
     return version;
   }
   static Future printSeperator() async {
     String separator = "--------------------------------";
-    int algmnt =0;
     final version = await _channel.invokeMethod('printText',{
       'message':separator,
-      'Alignment':algmnt,
-      'fontSize':16
+      'Alignment':0,
+      'fontSize':16,
+      "textAlignment":0
+    });
+    return version;
+  }
+  static Future printEmptyLine() async {
+    String newLine = "\n";
+
+    final version = await _channel.invokeMethod('printText',{
+      'message':newLine,
+      'Alignment':0,
+      'fontSize':16,
+      "textAlignment":0
     });
     return version;
   }
