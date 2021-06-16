@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Layout;
@@ -134,6 +135,8 @@ public class NgPrintPlugin implements FlutterPlugin, MethodCallHandler, Activity
         int fontSize = (int)call.argument("fontSize");
         TextPaint tp = new TextPaint();
         tp.setColor(Color.BLACK);
+        Typeface tf = Typeface.createFromAsset(mActivity.getAssets(), "fonts/DroidSansMono.ttf");
+        tp.setTypeface(Typeface.create(tf, Typeface.BOLD));
         tp.setTextAlign(textAlign);
         tp.setTextSize(fontSize);
         mBtp.printUnicodeText(call.argument("message").toString(),alignment1,tp);

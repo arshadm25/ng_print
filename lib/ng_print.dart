@@ -74,7 +74,7 @@ class NgPrint {
     final version = await _channel.invokeMethod('printText',{
       'message':separator,
       'Alignment':0,
-      'fontSize':16,
+      'fontSize':30,
       "textAlignment":0
     });
     return version;
@@ -85,7 +85,7 @@ class NgPrint {
     final version = await _channel.invokeMethod('printText',{
       'message':newLine,
       'Alignment':0,
-      'fontSize':16,
+      'fontSize':30,
       "textAlignment":0
     });
     return version;
