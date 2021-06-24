@@ -104,7 +104,13 @@ public class NgPrintPlugin implements FlutterPlugin, MethodCallHandler, Activity
       }
     }else if (call.method.equals("setPrinterWidth")) {
       try{
-        mBtp.setPrinterWidth(PrinterWidth.PRINT_WIDTH_48MM);
+        int printerId = (int)call.argument("printerId");
+        if(printerId==1){
+          mBtp.setPrinterWidth(PrinterWidth.PRINT_WIDTH_72MM);
+        }else{
+          mBtp.setPrinterWidth(PrinterWidth.PRINT_WIDTH_48MM);
+        }
+
         result.success(true);
       }catch(Exception ex){
         result.error("DEVICE_LIST_ERROR",ex.getMessage(),"");

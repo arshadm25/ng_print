@@ -26,8 +26,11 @@ class NgPrint {
     final version = await _channel.invokeMethod('showDevices');
     return version;
   }
-  static Future setPrinterWidth() async {
-    final state = await _channel.invokeMethod('setPrinterWidth');
+  static Future setPrinterWidth(int printerId) async {
+    //send 1 for 3 inch and 0 for 2 inch
+    final state = await _channel.invokeMethod('setPrinterWidth',{
+      'printerId':printerId
+    });
     return state;
   }
 
