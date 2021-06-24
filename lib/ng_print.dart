@@ -72,8 +72,27 @@ class NgPrint {
     });
     return version;
   }
-  static Future printSeperator() async {
+  static Future printSeperator(int seperatorId) async {
+    //0 for 2 in 1 for 3 in
     String separator = "---------------------";
+    if(seperatorId==1){
+      separator = "-------------------------------";
+    }
+    final version = await _channel.invokeMethod('printText',{
+      'message':separator,
+      'Alignment':0,
+      'fontSize':30,
+      "textAlignment":0
+    });
+    return version;
+  }
+
+  //pass no.of lines
+  static Future printSeperatorWithLength({int length:21}) async {
+    String separator = "";
+    for(var i=0;i<length;i++){
+      separator += "_";
+    }
     final version = await _channel.invokeMethod('printText',{
       'message':separator,
       'Alignment':0,
